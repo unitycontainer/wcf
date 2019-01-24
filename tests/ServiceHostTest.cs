@@ -36,7 +36,7 @@ namespace Unity.Wcf.Tests
 
             Assert.IsInstanceOfType(host, typeof(UnityServiceHost));
 
-            Assert.IsInstanceOfType(host.Description.ServiceType, typeof(TestService));
+            Assert.AreEqual(host.Description.ServiceType, typeof(TestService));
         }
     }
 }
