@@ -2,6 +2,11 @@ image: Visual Studio 2017
 configuration: Release
 platform: Any CPU
 
+skip_commits:
+  files:
+    - README.md
+    - LICENSE
+
 install:
   - ps: $env:build_version = (Select-Xml -Path ".\package.props" -XPath "/Project/PropertyGroup/Version" | Select-Object -ExpandProperty Node).InnerText
   - ps: Update-AppveyorBuild -Version "$env:build_version.$env:APPVEYOR_BUILD_NUMBER"
