@@ -20,12 +20,12 @@ build:
 after_build:
 - choco install opencover.portable
 - choco install codecov
-  
+
 test_script:
-- OpenCover.Console.exe -register:user -target:"C:\Program Files\dotnet\dotnet.exe" -targetargs:"test -l Appveyor --framework net47 --verbosity q"
+- OpenCover.Console.exe -register:user -target:"C:\Program Files\dotnet\dotnet.exe" -targetargs:"test -l Appveyor --no-build --framework net47 --verbosity q" "-filter:+[Unity.Wcf]*" -log:Debug
 
 after_test:
-- codecov -f "results.xml" 
+- codecov -f "results.xml"
 
 artifacts:
 - path: '**\Unity.*.nupkg'
