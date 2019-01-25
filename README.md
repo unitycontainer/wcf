@@ -1,4 +1,5 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/ujqcljpq388kq3dm/branch/master?svg=true)](https://ci.appveyor.com/project/unitycontainer/wcf/branch/master)
+[![codecov](https://codecov.io/gh/unitycontainer/wcf/branch/master/graph/badge.svg)](https://codecov.io/gh/unitycontainer/wcf)
 [![License](https://img.shields.io/badge/license-mit.svg)](https://github.com/unitycontainer/wcf/blob/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/dt/Unity.wcf.svg)](https://www.nuget.org/packages/Unity.wcf)
 [![NuGet](https://img.shields.io/nuget/v/Unity.wcf.svg)](https://www.nuget.org/packages/Unity.wcf)
