@@ -22,7 +22,7 @@ after_build:
 - choco install codecov
 
 test_script:
-- OpenCover.Console.exe -register:user -target:"C:\Program Files\dotnet\dotnet.exe" -targetargs:"test -l Appveyor --no-build --framework net47 --verbosity q" "-filter:+[Unity.Wcf]*" -log:Debug
+- OpenCover.Console.exe -register:user -target:"C:\Program Files\dotnet\dotnet.exe" -targetargs:"test -l Appveyor --framework net47 --verbosity q /p:DebugType=full /p:DebugSymbols=true" "-filter:+[Unity.Wcf]*"
 
 after_test:
 - codecov -f "results.xml"
