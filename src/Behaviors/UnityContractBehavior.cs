@@ -9,10 +9,7 @@ namespace Unity.Wcf
     {
         private readonly IInstanceProvider _instanceProvider;
 
-        public UnityContractBehavior(IInstanceProvider instanceProvider)
-        {
-            _instanceProvider = instanceProvider ?? throw new ArgumentNullException("instanceProvider");
-        }
+        public UnityContractBehavior(IInstanceProvider instanceProvider) => _instanceProvider = instanceProvider ?? throw new ArgumentNullException("instanceProvider");
 
         public void AddBindingParameters(ContractDescription contractDescription, ServiceEndpoint endpoint, BindingParameterCollection bindingParameters)
         {

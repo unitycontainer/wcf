@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ServiceModel;
 
 namespace Unity.Wcf
@@ -6,6 +6,16 @@ namespace Unity.Wcf
     public class UnityInstanceContextExtension : IExtension<InstanceContext>
     {
         private IUnityContainer _childContainer;
+
+        public void Attach(InstanceContext owner)
+        {
+        }
+
+        public void Detach(InstanceContext owner)
+        {
+        }
+
+        public void DisposeOfChildContainer() => _childContainer?.Dispose();
 
         public IUnityContainer GetChildContainer(IUnityContainer container)
         {
@@ -15,19 +25,6 @@ namespace Unity.Wcf
             }
 
             return _childContainer ?? (_childContainer = container.CreateChildContainer());
-        }
-
-        public void DisposeOfChildContainer()
-        {
-            _childContainer?.Dispose();
-        }
-
-        public void Attach(InstanceContext owner)
-        {
-        }
-
-        public void Detach(InstanceContext owner)
-        {
         }
     }
 }
