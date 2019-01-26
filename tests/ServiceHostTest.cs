@@ -1,6 +1,7 @@
 using System;
-using System.ServiceModel;
-using System.Web.Hosting;
+using System.Linq;
+using System.ServiceModel.Description;
+using FakeItEasy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity.Wcf.Tests.TestObjects;
 
@@ -9,7 +10,6 @@ namespace Unity.Wcf.Tests
     [TestClass]
     public class ServiceHostTest
     {
-
         [TestMethod]
         public void ShouldCreateServiceHost()
         {
@@ -20,6 +20,28 @@ namespace Unity.Wcf.Tests
             Assert.IsInstanceOfType(host, typeof(UnityServiceHost));
 
             Assert.AreEqual(host.Description.ServiceType, typeof(TestService));
+        }
+
+        [TestMethod]
+        public void TestBehaviors()
+        {
+            var servicebehavior = A.Fake<IContractBehavior>();
+
+            var fac = A.Fake<Func<IUnityContainer, object>>();
+
+            A.CallTo(fac).WithReturnType<object>().Returns(servicebehavior);
+
+
+            using (var container = new UnityContainer()
+                .RegisterFactory<IContractBehavior>("test", fac)
+                .RegisterType<IServiceBehavior, TestServiceBehavior>("test"))
+            using (var host = new UnityServiceHost(container, typeof(string)))
+            {
+                Assert.AreEqual(7, host.Description.Behaviors.Count);
+                Assert.IsTrue(host.Description.Behaviors.Contains(typeof(TestServiceBehavior)));
+
+                A.CallTo(fac).MustHaveHappenedOnceExactly();
+            }
         }
 
         [TestMethod]

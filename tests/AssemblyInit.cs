@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Unity.Wcf.Tests
 {
     [TestClass]
-    internal class AssemblyInit
+    public class AssemblyInit
     {
         [AssemblyInitialize]
         public static void TestFixtureSetup(TestContext context)
