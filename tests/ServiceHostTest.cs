@@ -1,12 +1,7 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Hosting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity.Wcf.Tests.TestObjects;
 
 namespace Unity.Wcf.Tests
@@ -14,7 +9,6 @@ namespace Unity.Wcf.Tests
     [TestClass]
     public class ServiceHostTest
     {
-
         [ClassInitialize]
         public static void TestFixtureSetup(TestContext context)
         {
@@ -38,13 +32,11 @@ namespace Unity.Wcf.Tests
             Assert.IsInstanceOfType(host, typeof(UnityServiceHost));
 
             Assert.AreEqual(host.Description.ServiceType, typeof(TestService));
-
         }
 
         [TestMethod]
         public void TestCall()
         {
-
             var host = new TestSupport.TestHost<ITestService, TestService>();
             try
             {
@@ -69,8 +61,6 @@ namespace Unity.Wcf.Tests
 
                     var proxy = host.GetProxy();
                     var res = proxy.GetData(5);
-
-
                 }
             }
             finally
