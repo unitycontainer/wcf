@@ -9,18 +9,6 @@ namespace Unity.Wcf.Tests
     [TestClass]
     public class ServiceHostTest
     {
-        [ClassInitialize]
-        public static void TestFixtureSetup(TestContext context)
-        {
-            if (!HostingEnvironment.IsHosted)
-            {
-                // The instance constructor hooks up the singleton hosting environment, ewww...
-                new HostingEnvironment();
-
-                // Check the hosting environment is fully initialized
-                ServiceHostingEnvironment.EnsureInitialized();
-            }
-        }
 
         [TestMethod]
         public void ShouldCreateServiceHost()
