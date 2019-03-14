@@ -1,16 +1,11 @@
-using System;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
 using System.ServiceModel.Dispatcher;
 
-namespace Unity.Wcf
+namespace Unity.Wcf.Tests.TestObjects
 {
-    public class UnityContractBehavior : IContractBehavior
+    internal class TestContractBehavior : IContractBehavior
     {
-        private readonly IInstanceProvider _instanceProvider;
-
-        public UnityContractBehavior(IInstanceProvider instanceProvider) => _instanceProvider = instanceProvider ?? throw new ArgumentNullException("instanceProvider");
-
         public void AddBindingParameters(ContractDescription contractDescription, ServiceEndpoint endpoint, BindingParameterCollection bindingParameters)
         {
         }
@@ -21,8 +16,6 @@ namespace Unity.Wcf
 
         public void ApplyDispatchBehavior(ContractDescription contractDescription, ServiceEndpoint endpoint, DispatchRuntime dispatchRuntime)
         {
-            dispatchRuntime.InstanceProvider = _instanceProvider;
-            dispatchRuntime.InstanceContextInitializers.Add(new UnityInstanceContextInitializer());
         }
 
         public void Validate(ContractDescription contractDescription, ServiceEndpoint endpoint)

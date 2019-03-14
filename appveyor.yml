@@ -2,6 +2,11 @@ image: Visual Studio 2017
 configuration: Release
 platform: Any CPU
 
+skip_commits:
+  files:
+    - README.md
+    - LICENSE
+
 install:
   - ps: $env:build_version = (Select-Xml -Path ".\package.props" -XPath "/Project/PropertyGroup/Version" | Select-Object -ExpandProperty Node).InnerText
   - ps: Update-AppveyorBuild -Version "$env:build_version.$env:APPVEYOR_BUILD_NUMBER"
@@ -20,12 +25,12 @@ build:
 after_build:
 - choco install opencover.portable
 - choco install codecov
-  
+
 test_script:
-- OpenCover.Console.exe -register:user -target:"C:\Program Files\dotnet\dotnet.exe" -targetargs:"test --framework net47 --verbosity q"
+- OpenCover.Console.exe -register:user -target:"C:\Program Files\dotnet\dotnet.exe" -targetargs:"test -l Appveyor --framework net47 --verbosity q /p:DebugType=full /p:DebugSymbols=true" "-filter:+[Unity.Wcf]*"
 
 after_test:
-- codecov -f "results.xml" 
+- codecov -f "results.xml"
 
 artifacts:
 - path: '**\Unity.*.nupkg'
