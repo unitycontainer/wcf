@@ -1,7 +1,5 @@
 using System;
-using System.Linq;
 using System.ServiceModel.Description;
-using FakeItEasy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity.Wcf.Tests.TestObjects;
 
@@ -25,22 +23,18 @@ namespace Unity.Wcf.Tests
         [TestMethod]
         public void TestBehaviors()
         {
-            var servicebehavior = A.Fake<IContractBehavior>();
-
-            var fac = A.Fake<Func<IUnityContainer, object>>();
-
-            A.CallTo(fac).WithReturnType<object>().Returns(servicebehavior);
-
+            var count = 0;
+            var behavior = new TestContractBehavior();
 
             using (var container = new UnityContainer()
-                .RegisterFactory<IContractBehavior>("test", fac)
+                .RegisterFactory<IContractBehavior>("test", (c, t, n) => { count++; return behavior; })
                 .RegisterType<IServiceBehavior, TestServiceBehavior>("test"))
-            using (var host = new UnityServiceHost(container, typeof(string)))
             {
-                Assert.AreEqual(7, host.Description.Behaviors.Count);
-                Assert.IsTrue(host.Description.Behaviors.Contains(typeof(TestServiceBehavior)));
-
-                A.CallTo(fac).MustHaveHappenedOnceExactly();
+                using (var host = new UnityServiceHost(container, typeof(TestService)))
+                {
+                    Assert.IsTrue(host.Description.Behaviors.Contains(typeof(TestServiceBehavior)));
+                    Assert.AreEqual(1, count);
+                }
             }
         }
 
